@@ -38,7 +38,7 @@ function FetchNFT({ wallet }) {
               <div>
                 <div className="block p-2 bg-[#e5dcf8] rounded-md hover:shadow-md">
                   <img
-                    src={url3.concat(nft.token.metadata.displayUri?.slice(7)) && nft.token.metadata.artifactUri}
+                    src={url3.concat(nft.token.metadata.displayUri?.slice(7))}
                     alt={nft.token.metadata.name}
                     className="w-full lg:w-48 sm:w-32 rounded-md sm:aspect-square aspect-video object-cover object-center"
                   />
