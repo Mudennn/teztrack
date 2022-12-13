@@ -3,8 +3,8 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import img1 from "../data/Mixoman.jpg";
-import img2 from "../data/FIMO.jpg";
+// import img1 from "../data/Mixoman.jpg";
+// import img2 from "../data/FIMO.jpg";
 import { RiCameraLensLine } from "react-icons/ri";
 
 const NFT = ({ wallet }) => {
@@ -29,7 +29,7 @@ const NFT = ({ wallet }) => {
 
   // const url1 = "ipfs://QmSvrdue8Tt67Kx3b1Z1N4Mf2AN7ABcMgwcZEh4iXczqTu"
   // const url2 = url1.substring(7,53)
-  const url3 = "https://ipfs.io/ipfs/";
+  // const url3 = "https://ipfs.io/ipfs/";
   // const result= url3.concat(url2)
   // console.log(result)
   // {url3.concat(data.token.metadata.artifactUri?.substring(7,52))}
@@ -44,7 +44,7 @@ const NFT = ({ wallet }) => {
                 <div className="md:flex items-center -mx-10">
                   <div className="w-full md:w-1/2 px-10 mb-10 md:mb-0">
                     <div className="relative">
-                      <img src={img1} className="w-full relative z-10" alt="" />
+                      <img src={"https://ipfs.io/ipfs/" + data.token.metadata.displayUri?.slice(7)} className="w-full relative z-10" alt="" />
                     </div>
                   </div>
                   <div className="w-full md:w-1/2 px-3">

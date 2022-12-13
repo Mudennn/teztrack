@@ -1,6 +1,11 @@
 import React from "react";
 import { useEffect } from "react";
 import { defiFormat } from "../pages/utils";
+import kUSD from '../data/kUSD.png'
+import plenty from '../data/Plenty.png'
+import upsobertez from '../data/upsobertez.png'
+import USDtz from '../data/usdtz.png'
+import xPlenty from '../data/xPlenty.png'
 
 const WalletTable = ({ wallet, defiBalance, setDefiBalance }) => {
   useEffect(() => {
@@ -23,9 +28,14 @@ const WalletTable = ({ wallet, defiBalance, setDefiBalance }) => {
 
   // const url1 = "ipfs://QmSvrdue8Tt67Kx3b1Z1N4Mf2AN7ABcMgwcZEh4iXczqTu"
   // const url2 = url1.substring(7,53)
-  const url3 = "https://ipfs.io/"
+  // const url3 = "https://ipfs.io/ipfs/"
   // const result= url3.concat(url2)
   // console.log(result)
+
+  // const png1= "https://upsorber.com/upsorber.png"
+  // const png2 = png1.substring(png1.length - 3)
+  // console.log(png2)
+  
 
   return (
     <div>
@@ -55,9 +65,19 @@ const WalletTable = ({ wallet, defiBalance, setDefiBalance }) => {
                         <td className="p-2 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3 rounded-full bg-gray-300">
+
                               <img
                                 className="rounded-full bg-gray-300"
-                                src={url3.concat(defi.token.metadata.displayUri?.slice(7)) && defi.token.metadata.thumbnailUri}
+                                src ={`${
+                                  defi.token.metadata.thumbnailUri?.substring(defi.token.metadata.thumbnailUri.length-3) === "png"
+                                    ? defi.token.metadata.thumbnailUri 
+                                    : defi.token.contract.address === "KT1K9gCRgaLRFKTErYt1wVxA3Frb9FjasjTV" ? kUSD
+                                    : defi.token.contract.address === "KT1LN4LPSqTMS7Sd2CJw4bbDGRkMv2t68Fy9" ? USDtz
+                                    : defi.token.contract.address === "KT1GBZmSxmnKJXGMdMLbugPfLyUPmuLSMwKS" ? upsobertez
+                                    : defi.token.contract.address === "KT1GRSvLoikDsXujKgZPsGLX8k8VvR2Tq95b" ? plenty
+                                    : defi.token.contract.address === "KT1Rpviewjg82JgjGfAKFneSupjAR1kUhbza" ? xPlenty
+                                    : "https://ipfs.io/ipfs/" + (defi.token.metadata.thumbnailUri?.slice(7))  
+                                }`}
                                 width="40"
                                 height="40"
                                 alt=""

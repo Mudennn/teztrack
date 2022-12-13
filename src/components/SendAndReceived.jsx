@@ -45,28 +45,33 @@ const SendAndReceived = ({wallet}) => {
                           <td className="p-2 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="flex items-center justify-center text-2xl mr-2 sm:mr-3 bg-[#734ccc] rounded-full text-white w-8 h-8 ">
-                                <AiOutlineArrowUp />
+                                {data.target.address === wallet ? <AiOutlineArrowDown /> : <AiOutlineArrowUp />} 
                               </div>
                               <div className="font-medium text-gray-800">
-                                <p>Send</p>
+                                {/* <p>Send</p>  */}
+                                <span >{data.target.address === wallet  ? 'Received' : 'Send'}</span> 
                                 <p className="text-gray-400">{moment(data.timestamp).tz('America/New_York').format('DD/MM/YY HH:mm')}</p>
                               </div>
                             </div>
                           </td>
                           <td className="p-2 whitespace-nowrap">
-                            <p className="text-gray-400">To</p>
-                            <p>
-                              {data.target.alias ||
+                            <p className="text-gray-400">{data.target.address === wallet ? 'From' : 'To'}</p>
+                            <p>{data.target.address === wallet ? data.sender.alias || data.sender.address?.substring(0, 8) +
+                                  "..." +
+                                  data.sender.address?.substring(data.sender.address?.length - 4) : data.target.address?.substring(0, 8) +
+                                  "..." +
+                                  data.target.address?.substring(data.target.address?.length - 4)} 
+                              {/* {data.target.alias ||
                                 data.target.address?.substring(0, 8) +
                                   "..." +
-                                  data.target.address?.substring(data.target.address?.length - 4)}
+                                  data.target.address?.substring(data.target.address?.length - 4)} */}
                             </p>
                             
                           </td>
                           <td className="p-2 whitespace-nowrap">
                             <div className="font-medium text-gray-800">
-                              <p className="text-red-400">
-                                {defiFormat(data.amount)} ꜩ
+                              <p className={`${data.target.address === wallet ? ' text-green-400' : 'text-red-400'} `}>
+                                {data.target.address === wallet ? '+' + defiFormat(data.amount) : '-' + defiFormat(data.amount)} ꜩ
                               </p>
                               {/* <span className={`text-xs font-semibold ml-2 ${`data.amount === data.target.address = ${wallet}` ?  'text-green-400 ' : ' text-red-400'}`}> {defiFormat(data.amount)} ꜩ</span> */}
                               {/* <p className="text-gray-400">ꜩ</p> */}
