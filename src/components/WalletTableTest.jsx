@@ -7,14 +7,23 @@ import upsobertez from '../data/upsobertez.png'
 import USDtz from '../data/usdtz.png'
 import xPlenty from '../data/xPlenty.png'
 import axios from "axios";
-import useAxios from "../hooks/useAxios";
+// import useAxios from "../hooks/useAxios";
+// import { keyBy } from "lodash";
 
 
 
 
 
-const WalletTable = ({ wallet, defiBalance, setDefiBalance }) => {
-  const [user, setUser] = useState([])
+const WalletTableTest = ({ wallet, defiBalance, setDefiBalance }) => {
+//   const [price, setPrice] = useState([])
+  const [kusd, setKUSD] = useState([])
+  const [upsorber, setUpsorber] = useState([])
+  const [plentydao, setPlentyDAO] = useState([])
+  const [usdc, setUSDC] = useState([])
+  const [usdtz, setUSDCtz] = useState([])
+  const [usdt, setUSDT] = useState([])
+
+
 
   useEffect(() => {
     if (wallet) {
@@ -27,31 +36,37 @@ const WalletTable = ({ wallet, defiBalance, setDefiBalance }) => {
         const balance = await fetch(fetchURL, requestOptions).then((data) =>
           data.json()
         );
-        console.log(`Token at account ${wallet} :`, balance);
+        
+        const response = await axios.get("https://api.coingecko.com/api/v3/simple/price?ids=tezos%2Ckolibri-usd%2Cupsorber%2Cusdtez%2Cplenty-dao%2Ctether%2Cusd-coin&vs_currencies=usd")
+        // const convRateTezos = Number(response.data.tezos.usd)
+        const convRateKUSD = Number(response.data["kolibri-usd"].usd).toFixed(1)
+        const convRateUpsorber = Number(response.data.upsorber.usd).toFixed(8)
+        const convRatePlenty = Number(response.data["plenty-dao"].usd)
+        const convRateUSDC = Number(response.data["usd-coin"].usd).toFixed(1)
+        const convRateUSDtz = Number(response.data.usdtez.usd).toFixed(1)
+        const convRateUSDT = Number(response.data.tether.usd).toFixed(1)
+        
+
+        console.log(`Token at account ${wallet} :`,balance);
+        // console.log(`Conversion Rate Tezos:`, convRateTezos);
+        console.log(`Conversion Rate Upsorber:`, convRateUpsorber);
+        console.log(`Conversion Rate Price:`, response);
+
         setDefiBalance(balance);
+        // setPrice(response)
+
+        setUpsorber(convRateUpsorber)
+        setKUSD(convRateKUSD)
+        setPlentyDAO(convRatePlenty)
+        setUSDC(convRateUSDC)
+        setUSDCtz(convRateUSDtz)
+        setUSDT(convRateUSDT)
       };
       fetchBalance();
     }
   }, [wallet]);
 
-  // const fetchData = () => {
-  //   return axios.get("https://api.coingecko.com/api/v3/simple/price?ids=tezos%2Ckolibri-usd%2Cupsorber%2Cusdtez%2Cplenty-dao%2Ctether%2Cusd-coin&vs_currencies=usd")
-  //         .then((response) => setUser(response.data));
-  //         // const convRate = Number(response.data.tezos.usd)
-  // }
-  // useEffect(() => {
-  //   fetchData();
-  // },[])
-  
-  // const url1 = "ipfs://QmSvrdue8Tt67Kx3b1Z1N4Mf2AN7ABcMgwcZEh4iXczqTu"
-  // const url2 = url1.substring(7,53)
-  // const url3 = "https://ipfs.io/ipfs/"
-  // const result= url3.concat(url2)
-  // console.log(result)
-
-  // const png1= "https://upsorber.com/upsorber.png"
-  // const png2 = png1.substring(png1.length - 3)
-  // console.log(png2)
+ 
   
 
   return (
@@ -113,8 +128,19 @@ const WalletTable = ({ wallet, defiBalance, setDefiBalance }) => {
 
                         <td className="p-2 whitespace-nowrap">
                           <div className="text-right font-medium text-gray-900">
-                            <p className="font-bold">
-                              $2,890.66</p>
+                            <p className="font-bold">$
+                                {/* $2,890.66 */}
+                                {defi.token.contract.address === "KT1K9gCRgaLRFKTErYt1wVxA3Frb9FjasjTV" ? (eighteenFormat(defi.balance) * kusd) //kUSD
+                              : defi.token.contract.address === "KT1UsSfaXyqcjSVPeiD7U1bWgKy3taYN7NWY" ? (sixFormat(defi.balance) * usdc) // USDC.e
+                              : defi.token.contract.address === "KT1LN4LPSqTMS7Sd2CJw4bbDGRkMv2t68Fy9" ? (sixFormat(defi.balance) * usdtz) // USDtz
+                              : defi.token.contract.address === "KT1VNEzpf631BLsdPJjt2ZhgUitR392x6cSi" ? (sixFormat(defi.balance)) //tQPLP
+                              : defi.token.contract.address === "KT1GRSvLoikDsXujKgZPsGLX8k8VvR2Tq95b" ? ((plentyDAO(defi.balance) * plentydao)) //Plenty DAO
+                              : defi.token.contract.address === "KT1Rpviewjg82JgjGfAKFneSupjAR1kUhbza" ? (eighteenFormat(defi.balance)) //xPlenty
+                              : defi.token.contract.address === "KT1XnTn74bUtxHfDtBmm2bGZAQfhPbvKWR8o" ? (sixFormat(defi.balance) * usdt) // USDT
+                              : defi.token.contract.address === "KT1HbXV1HZrmuwbbiVAyRCkRjMV8xbqjavMU" ? (spicySwap(defi.balance)) // SpicySwap
+                              : defi.token.contract.address === "KT1TgmD7kXQzofpuc9VbTRMdZCS2e6JDuTtc" ? (((defi.balance) * upsorber)?.toFixed(2)) // upsober
+                              : 0}
+                                </p>
                             <p className="text-xs text-gray-500">
                               {defi.token.contract.address === "KT1K9gCRgaLRFKTErYt1wVxA3Frb9FjasjTV" ? (eighteenFormat(defi.balance)) //kUSD
                               : defi.token.contract.address === "KT1UsSfaXyqcjSVPeiD7U1bWgKy3taYN7NWY" ? (sixFormat(defi.balance)) // USDC.e
@@ -141,4 +167,4 @@ const WalletTable = ({ wallet, defiBalance, setDefiBalance }) => {
   );
 };
 
-export default WalletTable;
+export default WalletTableTest;

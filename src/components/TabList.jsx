@@ -12,6 +12,7 @@ import TransactionTable from "./TransactionTable";
 import TransactionTabList from "./TransactionTabList";
 import WalletChart from "./WalletChart";
 import WalletTable from "./WalletTable";
+import WalletTableTest from "./WalletTableTest";
 
 
 const TabList = ({wallet, defiBalance, setDefiBalance}) => {
@@ -95,7 +96,8 @@ const TabList = ({wallet, defiBalance, setDefiBalance}) => {
               <WalletChart />
             </div>
           </div>
-          <WalletTable wallet={wallet} defiBalance={defiBalance} setDefiBalance={setDefiBalance} />
+          {/* <WalletTable wallet={wallet} defiBalance={defiBalance} setDefiBalance={setDefiBalance} /> */}
+          <WalletTableTest wallet={wallet} defiBalance={defiBalance} setDefiBalance={setDefiBalance} />
           {/* <DefiTable /> */}
         </div>
 
